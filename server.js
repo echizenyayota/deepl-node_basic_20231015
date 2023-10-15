@@ -15,10 +15,21 @@ app.use(cors());
 
 app.listen(PORT, () => console.log("Server running on PORT " + PORT));
 
-const authKey = process.env.DEEPL_API_KEY; // Replace with your key
-const translator = new deepl.Translator(authKey);
 
-(async () => {
-  const result = await translator.translateText('good evening', null, "ja");
-  console.log(result.text);
-})();
+app.get("/translation", async(req, res) => {
+  const authKey = process.env.DEEPL_API_KEY; // Replace with your key
+  const translator = new deepl.Translator(authKey);
+
+  try {
+    (async () => {
+      const result = await translator.translateText('good evening', null, "ja");
+      console.log(result.text);
+      res.status(200).json(result.text);
+    })();
+  } catch(err) {
+    console.log(err);
+    res.status(500).json({message: err});
+  }
+});
+
+
