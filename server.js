@@ -18,10 +18,10 @@ app.listen(PORT, () => console.log("Server running on PORT " + PORT));
 app.get("/languages", async(req, res) => {
   const authKey = process.env.DEEPL_API_KEY; // Replace with your key
   const translator = new deepl.Translator(authKey);
-  const sourceLanguages = await translator.getSourceLanguages();
+  const targetLanguages = await translator.getTargetLanguages();
 
   try {
-    res.status(200).json(sourceLanguages.map(lang => `${lang.name} (${lang.code})`));
+    res.status(200).json(targetLanguages.map(lang => `${lang.name} (${lang.code})`));
   } catch(err) {
     console.log(err);
     res.status(500).json({message: err});
