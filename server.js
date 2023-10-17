@@ -23,11 +23,12 @@ app.get("/languages", async(req, res) => {
   const sourceLanguages = await translator.getSourceLanguages();
 
   try {
-    for (let i = 0; i < sourceLanguages.length; i++) {
-        const lang = sourceLanguages[i];
-        console.log(`${lang.name} (${lang.code})`); // Example: 'English (en)'
-    }
-    res.status(200).json(`${lang.name} (${lang.code})`); 
+    res.status(200).json(sourceLanguages.map(lang => `${lang.name} (${lang.code})`));
+    // for (let i = 0; i < sourceLanguages.length; i++) {
+    //     const lang = sourceLanguages[i];
+    //     console.log(`${lang.name} (${lang.code})`); // Example: 'English (en)'
+    // }
+    // res.status(200).json(`${lang.name} (${lang.code})`); 
   } catch(err) {
     console.log(err);
     res.status(500).json({message: err});
